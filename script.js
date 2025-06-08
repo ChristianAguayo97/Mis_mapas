@@ -1,8 +1,9 @@
 let map;
 let windowLines = [];
-let windowMarkers = []; 
+let windowMarkers = [];
 let selectedLocationId = null;
 let SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/1Izlbrw4NMixFpSfuBh7oBQFg4UGen6HMCKlWAx70if8/export?format=csv';
+let showMarkers = true; // Nuevo estado para mostrar/ocultar marcadores
 
 // Maneja el cambio de hoja desde el input
 document.addEventListener('DOMContentLoaded', function() {
@@ -11,6 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const loadBtn = document.getElementById('loadSheetBtn');
     const urlInput = document.getElementById('sheetUrlInput');
+    const toggleMarkers = document.getElementById('toggleMarkers');
+
+    if (toggleMarkers) {
+        toggleMarkers.addEventListener('change', function() {
+            showMarkers = toggleMarkers.checked;
+            updateMarkersVisibility();
+        });
+    }
+
     if (loadBtn && urlInput) {
         loadBtn.addEventListener('click', function() {
             let url = urlInput.value.trim();
@@ -22,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 SHEET_CSV_URL = url;
                 loadSheetAndDraw();
-                urlInput.value = ''; 
+                urlInput.value = '';
             }
         });
     }
@@ -56,7 +66,7 @@ async function loadSheetAndDraw() {
     const csv = await response.text();
     const rows = csv.split('\n').slice(1); 
     window.lines = [];
-    window.markers = []; // <-- Agrega esto
+    window.markers = [];
     const locationsList = document.getElementById('locationsList');
     if (locationsList) locationsList.innerHTML = '';
 
@@ -76,17 +86,20 @@ async function loadSheetAndDraw() {
         const polyline = L.polyline([[latA, lonA], [latB, lonB]], {color: 'blue'}).addTo(map);
         window.lines.push(polyline);
 
-        // Agrega marcador para Punto A
+        // Agrega marcadores para Punto A y B
         const markerA = L.marker([latA, lonA])
             .addTo(map)
             .bindPopup(`<b>${calle}</b><br>Entre: ${entre1} y ${entre2}<br><b>Punto A</b>`);
-        window.markers.push(markerA);
-
-        // Agrega marcador para Punto B
         const markerB = L.marker([latB, lonB])
             .addTo(map)
             .bindPopup(`<b>${calle}</b><br>Entre: ${entre1} y ${entre2}<br><b>Punto B</b>`);
-        window.markers.push(markerB);
+        window.markers.push(markerA, markerB);
+
+        // Oculta los marcadores si showMarkers es false
+        if (!showMarkers) {
+            map.removeLayer(markerA);
+            map.removeLayer(markerB);
+        }
 
         // Sidebar: agrega tramo
         if (locationsList) {
@@ -115,6 +128,19 @@ async function loadSheetAndDraw() {
     // Centra el mapa en la zona de los datos
     if (window.lines.length > 0) {
         map.fitBounds(L.featureGroup(window.lines).getBounds());
+    }
+}
+
+// Función para mostrar/ocultar marcadores según el checkbox
+function updateMarkersVisibility() {
+    if (window.markers) {
+        window.markers.forEach(marker => {
+            if (showMarkers) {
+                if (!map.hasLayer(marker)) map.addLayer(marker);
+            } else {
+                if (map.hasLayer(marker)) map.removeLayer(marker);
+            }
+        });
     }
 }
 
