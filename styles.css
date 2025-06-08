@@ -1,0 +1,373 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 50%, #f0fdf4 100%);
+    min-height: 100vh;
+}
+
+/* Header */
+.header {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e0f2fe;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #3b82f6, #10b981);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-text h1 {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #1e40af, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.header-text p {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+/* Estilos para el botón de cargar Google Sheets */
+.parent {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+#sheetUrlInput {
+    padding: 8px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 300px;
+    background: white;
+    transition: border-color 0.2s ease;
+}
+
+#sheetUrlInput:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+#sheetUrlInput::placeholder {
+    color: #9ca3af;
+}
+
+#loadSheetBtn {
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #3b82f6, #10b981);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#loadSheetBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#loadSheetBtn:active {
+    transform: translateY(0);
+}
+
+/* Main Container */
+.main-container {
+    display: flex;
+    height: calc(100vh - 64px);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 320px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-right: 1px solid #e0f2fe;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.sidebar-content {
+    padding: 16px;
+}
+
+.sidebar-header {
+    margin-bottom: 24px;
+}
+
+.sidebar-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sidebar-icon {
+    font-size: 20px;
+}
+
+.sidebar-title h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+/* Location Cards */
+.locations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.location-card {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-left: 4px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.location-card:hover {
+    border-left-color: #3b82f6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+}
+
+.location-card.selected {
+    border-left-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.location-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.location-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1f2937;
+    flex: 1;
+}
+
+.location-status {
+    font-size: 18px;
+    margin-left: 8px;
+}
+
+.location-description {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.location-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.location-category {
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.location-coords {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+/* Info Card */
+.info-card {
+    background: linear-gradient(135deg, #f0f9ff, #f0fdf4);
+    border: 1px solid #e0f2fe;
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.info-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 8px;
+}
+
+.info-card p {
+    font-size: 12px;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+/* Map */
+.map-main {
+    flex: 1;
+    position: relative;
+}
+
+.map-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
+/* Custom map popup styles */
+.custom-popup .popup-title {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #1f2937;
+}
+
+.custom-popup .popup-description {
+    margin-bottom: 12px;
+    color: #6b7280;
+}
+
+.custom-popup .popup-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-popup .popup-category {
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.custom-popup .popup-status.visitado {
+    background: #d1fae5;
+    color: #059669;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.custom-popup .popup-status.pendiente {
+    background: #fef3c7;
+    color: #d97706;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+/* Custom marker styles */
+.custom-marker {
+    background: transparent;
+    border: none;
+}
+
+.marker-pin {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.visited-pin {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.pending-pin {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.marker-icon {
+    transform: rotate(45deg);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.marker-pin:hover {
+    transform: rotate(-45deg) scale(1.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+    
+    .parent {
+        width: 100%;
+    }
+    
+    #sheetUrlInput {
+        width: 100%;
+        flex: 1;
+    }
+    
+    .main-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid #e0f2fe;
+    }
+    
+    .map-main {
+        height: 60vh;
+    }
+}
